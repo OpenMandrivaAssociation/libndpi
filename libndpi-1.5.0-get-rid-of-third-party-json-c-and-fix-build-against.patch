@@ -1,0 +1,32 @@
+--- libndpi-1.5.0/example/Makefile.am.example~	2014-08-18 10:41:39.149955485 +0200
++++ libndpi-1.5.0/example/Makefile.am	2014-08-18 10:41:43.720996504 +0200
+@@ -1,24 +1,10 @@
+ bin_PROGRAMS = ndpiReader
+ 
+-AM_CPPFLAGS = -I$(top_srcdir)/src/include -I third-party/json-c
+-AM_CFLAGS = @PTHREAD_CFLAGS@
++ndpiReader_CPPFLAGS = -I$(top_srcdir)/src/include $(shell pkg-config --cflags json-c)
+ 
+-LDADD = $(top_builddir)/src/lib/libndpi.la third-party/json-c/libjson-c.la @PTHREAD_LIBS@
+-LDFLAGS = -static
++ndpiReader_CFLAGS = -pthread
+ 
+-ndpiReader_SOURCES = ndpiReader.c
+-
+-# Explictely state that to build ndpiReader.o we first need json_config.h.
+-ndpiReader.o: third-party/json-c/libjson-c.la
+-
+-third-party/json-c/libjson-c.la:
+-	cd third-party/json-c && ./configure
+-	cd third-party/json-c && make libjson-c.la
++ndpiReader_LDADD = $(top_builddir)/src/lib/libndpi.la -lpthread -lcap
++ndpiReader_LDFLAGS = $(shell pkg-config --libs json-c) -static
+ 
+-clean-local:
+-	cd third-party/json-c && make clean
+-
+-distclean-local:
+-	cd third-party/json-c && make distclean
+-
+-EXTRA_DIST = third-party
++ndpiReader_SOURCES = ndpiReader.c
