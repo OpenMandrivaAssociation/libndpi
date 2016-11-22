@@ -2,16 +2,18 @@
 %define	major	1
 %define	libname	%mklibname %{oname} %{major}
 %define	devname	%mklibname %{oname} -d
+%define real_version 1.8.0
 
 Summary:	Open source deep packet inspection
 Name:		libndpi
-Version:	1.5.0
+Version:	1.8
 Release:	1
 License:	LGPLv3
 Group:		System/Libraries
 URL:		http://www.ntop.org/products/ndpi/
-Source0:	%{name}-%{version}.tar.xz
+Source0:	http://downloads.sourceforge.net/project/ntop/nDPI/nDPI-%{version}.tar.gz
 Patch0:		libndpi-1.5.0-get-rid-of-third-party-json-c-and-fix-build-against.patch
+BuildRequires:	pcap-devel
 
 %description
 nDPI is a ntop-maintained superset of the popular OpenDPI library. Released
@@ -86,9 +88,10 @@ These are the header files and libraries for developing applications for
 %{name}.
 
 %prep
-%setup -q
-%patch0 -p1 -b .example~
-automake -f
+%setup -qn nDPI-%{version}
+rm -rf packages/ubuntu/
+libtoolize --copy --force
+autoreconf -fiv
 
 %build
 %configure
@@ -101,13 +104,11 @@ automake -f
 %{_bindir}/ndpiReader
 
 %files -n %{libname}
-%doc README
 %{_libdir}/libndpi.so.%{major}*
 
 %files -n %{devname}
 %doc ChangeLog
-%dir %{_includedir}/libndpi-%{version}/libndpi
-%{_includedir}/libndpi-%{version}/libndpi/*.h
+%dir %{_includedir}/libndpi-%{real_version}/libndpi
+%{_includedir}/libndpi-%{real_version}/libndpi/*.h
 %{_libdir}/libndpi.so
 %{_libdir}/pkgconfig/libndpi.pc
-
