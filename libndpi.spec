@@ -7,7 +7,7 @@
 Summary:	Open source deep packet inspection
 Name:		libndpi
 Version:	1.8
-Release:	1
+Release:	2
 License:	LGPLv3
 Group:		System/Libraries
 URL:		http://www.ntop.org/products/ndpi/
