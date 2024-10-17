@@ -10,7 +10,7 @@ Version:	1.8
 Release:	3
 License:	LGPLv3
 Group:		System/Libraries
-URL:		http://www.ntop.org/products/ndpi/
+URL:		https://www.ntop.org/products/ndpi/
 Source0:	http://downloads.sourceforge.net/project/ntop/nDPI/nDPI-%{version}.tar.gz
 Patch0:		libndpi-1.5.0-get-rid-of-third-party-json-c-and-fix-build-against.patch
 BuildRequires:	pcap-devel
